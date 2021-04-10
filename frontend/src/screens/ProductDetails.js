@@ -15,7 +15,7 @@ const ProductDetails = ({ match }) => {
       setProduct(data)
     }
     fetchProduct()
-  }, [])
+  }, [match.params.id])
 
   return (
     <>

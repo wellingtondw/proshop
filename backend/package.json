@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/server"
+    "start": "node src/server",
+    "server": "nodemon src/server",
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "author": "Wellington Lima",
   "license": "ISC",
@@ -12,6 +15,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "concurrently": "^6.0.1",
     "nodemon": "^2.0.7"
   }
 }

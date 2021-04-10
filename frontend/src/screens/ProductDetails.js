@@ -2,11 +2,20 @@ import { Link } from 'react-router-dom'
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 
 import Rating from '../components/Rating'
-
-import products from '../products'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const ProductDetails = ({ match }) => {
-  const product = products.find(product => product._id === match.params.id)
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`)
+
+      setProduct(data)
+    }
+    fetchProduct()
+  }, [])
 
   return (
     <>
@@ -21,7 +30,7 @@ const ProductDetails = ({ match }) => {
               <h3>{product.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Rating value={product.rating} text={`${product.numReviews} reviews`}/>
+              <Rating value={product.rating ? product.rating : 0} text={`${product.numReviews} reviews`}/>
             </ListGroup.Item>
             <ListGroup.Item>
               Price: ${product.price}

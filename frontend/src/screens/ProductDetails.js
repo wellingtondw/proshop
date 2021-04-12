@@ -1,21 +1,33 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { listProductDetails } from '../redux/actions/productActions'
 
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import Rating from '../components/Rating'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
 
 const ProductDetails = ({ match }) => {
-  const [product, setProduct] = useState({})
+  const dispatch = useDispatch()
+  const { id } = match.params
+
+  const productDetails = useSelector(state => state.productDetails) 
+  const { loading, error, product } = productDetails
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${match.params.id}`)
+    dispatch(listProductDetails({ id }))
+  }, [id, dispatch])
 
-      setProduct(data)
-    }
-    fetchProduct()
-  }, [match.params.id])
+
+  if(error) {
+    return <Message variant='danger'>{error}</Message>
+  }
+
+  if(loading) {
+    return <Loader />
+  }
+
 
   return (
     <>

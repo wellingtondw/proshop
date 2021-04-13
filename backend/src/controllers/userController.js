@@ -23,17 +23,26 @@ const authUser = expressAsyncHandler(async (request, response) => {
     isAdmin: user.isAdmin,
     token: generateToken(user._id)
   })
-
 })
 
 //@desc Get user profile
 //@route GET /api/users/profile
 //@access Private
 const getUserProfile = expressAsyncHandler(async (request, response) => {
-  // const { _id } = request.user
-  // const user = await User.findById(_id)
-  
-  response.send('success')
+  const { _id } = request.user
+  const user = await User.findById(_id)
+
+  if(!user) {
+    response.status(404)
+    throw new Error('User not found')
+  }
+
+  return response.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin
+  })   
 })
 
 export { authUser, getUserProfile }

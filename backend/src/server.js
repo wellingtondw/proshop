@@ -1,9 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
+import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 
 import productsRoutes from './routes/products.routes.js'
-import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
+import usersRoutes from './routes/users.routes.js'
+
 
 dotenv.config()
 connectDB()
@@ -12,6 +14,7 @@ const app = express()
 app.use(express.json())
 
 app.use('/api/products', productsRoutes)
+app.use('/api/users', usersRoutes)
 
 //handle global errors
 app.use(notFound)

@@ -1,7 +1,7 @@
 import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/userConstants'
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
-const initialState = userInfoFromStorage ? JSON.parse(userInfoFromStorage) : {}
+const initialState = userInfoFromStorage ? { userInfo: JSON.parse(userInfoFromStorage) } : {}
 
 export const userReducer = (state = initialState, action) => {
   switch(action.type) {

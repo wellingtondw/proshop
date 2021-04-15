@@ -12,6 +12,7 @@ import ProductDetails from './screens/ProductDetails'
 import Cart from './screens/Cart'
 import Login from './screens/Login'
 import Register from './screens/Register'
+import Profile from './screens/Profile'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path='/login' component={Login} exact />
             <Route path='/register' component={Register} exact />
             <Route path='/' component={Home} exact />
+            <Route path='/profile' component={Profile} exact />
             <Route path='/product/:id' component={ProductDetails} exact />
             <Route path='/cart/:id?' component={Cart} exact />
           </Container>

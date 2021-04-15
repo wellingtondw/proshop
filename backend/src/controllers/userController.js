@@ -78,4 +78,34 @@ const getUserProfile = expressAsyncHandler(async (request, response) => {
   })   
 })
 
-export { authUser, registerUser, getUserProfile }
+//@desc Update user profile
+//@route PUT /api/users/profile
+//@access Private
+const updateUserProfile = expressAsyncHandler(async (request, response) => {
+  const { _id } = request.user
+  const { name, email, password, } = request.body
+  const user = await User.findById(_id)
+
+  if(!user) {
+    response.status(404)
+    throw new Error('User not found')
+  }
+
+  user.name = name || user.name
+  user.email = email || user.email
+  
+  if(password) {
+    user.password = password
+  }
+
+  const updatedUser = await user.save()
+
+  return response.status(201).json({ 
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    isAdmin: updatedUser.isAdmin
+  })
+})
+
+export { authUser, registerUser, getUserProfile, updateUserProfile }

@@ -129,6 +129,11 @@ export const updateUserProfile = ({ name, email, password }) => async(dispatch, 
       type: USER_DETAILS_SUCCESS,
       payload: data
     })
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data
+    })
     
   } catch (error) {
     dispatch({

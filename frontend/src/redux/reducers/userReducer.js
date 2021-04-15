@@ -23,7 +23,7 @@ export const userLoginReducer = (state = userReducerInitialState, action) => {
       return { loading: true}
     case USER_LOGIN_SUCCESS: 
       localStorage.setItem('userInfo', JSON.stringify(action.payload))
-      return { loading: false, userInfo: action.payload }
+      return { loading: false, userInfo: { ...state.userInfo, ...action.payload } }
     case USER_LOGIN_FAIL: 
       return { loading: false, error: action.payload }
     case USER_LOGOUT:
